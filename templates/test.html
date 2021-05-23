@@ -1,7 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-	{% for karyawan in list_karyawan %}
-		{{karyawan}}
-	{% endfor %}
+	<div class="container">
+		<div class="row">
+			<div class="col text-center" style="margin-top: 20px">
+				<h2>List Seluruh Karyawan</h2>
+				
+				<button style="margin: 15px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#TambahData">Tambah Data Karyawan</button>
+				<a style="margin: 15px" type="button" class="btn btn-success" href="#">Download Daftar Karyawan</a>
+			</div>
+		</div>
+		<div style="width: 100%" class="table-responsive">
+			<table class="table table-hover text-center table-bordered" >
+				<thead>
+					<tr>
+						<th class="align-middle" scope="col">No.</th>
+						<th class="align-middle" scope="col">Nama</th>
+						<th class="align-middle" scope="col">Masa Kerja</th>
+						<th class="align-middle" scope="col">Usia</th>
+						<th class="align-middle" scope="col">Prestasi Kerja</th>
+						<th class="align-middle" scope="col">Kemampuan Komunikasi</th>
+						<th class="align-middle" scope="col">Kesehatan</th>
+						<th class="align-middle" scope="col"> Action</th>
+					</tr>
+				</thead>
+				{% for k in list_karyawan %}
+					<tr>
+						<th scope="col" class="align-middle">{{forloop.counter}}.</th>
+						<td class="align-middle">{{k.nama}} </td>
+						<td class="align-middle">{{k.masa_kerja}} </td>
+						<td class="align-middle">{{k.usia}} </td>
+						<td class="align-middle">{{k.prestasi}} </td>
+						<td class="align-middle">{{k.kemampuan_komunikasi}} </td>
+						<td class="align-middle">{{k.kesehatan}} </td>
+						<td class="align-middle">
+							<a href="#" class="btn btn-secondary">Edit</a>
+							<button type="button" class="btn btn-danger" data-toggle="modal">
+							Hapus
+							</button>
+						</td>
+					</tr>
+				{% endfor %}
+				
+			</table>
+		</div>
+	</div>
 {% endblock %}
