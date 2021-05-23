@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+	{% for karyawan in list_karyawan %}
+		{{karyawan}}
+	{% endfor %}
+{% endblock %}
