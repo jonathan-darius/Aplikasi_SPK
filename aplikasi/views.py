@@ -44,3 +44,10 @@ def ubah_data(request, id_karyawan):
             'karyawan': karyawan,
         }
     return render(request,'ubah_data.html',konteks)
+
+
+def hapus_data(request,id_karyawan):
+    karyawan = Karyawan.objects.filter(id=id_karyawan)
+    karyawan.delete()
+
+    return (redirect('index'))
