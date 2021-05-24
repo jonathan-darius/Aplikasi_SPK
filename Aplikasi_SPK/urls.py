@@ -19,5 +19,6 @@ from aplikasi.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', index)
+    path('index/', index, name='index'),
+    path('index/ubah_data/<int:id_karyawan>', ubah_data,name='ubah')
 ]

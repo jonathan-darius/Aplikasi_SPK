@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{%block content%}
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<h1>Ubah: {{karyawan.nama}}</h1>
+			{% for message in messages %}
+				{%if message%}
+				<div class="alert alert-success">{{message}}</div>
+				{%endif%}
+			{% endfor %}
+			<form action="/index/ubah_data/{{karyawan.id}}" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+				<button class="btn btn-primary">Mengubah Data</button>
+				<a href="/index" class="btn btn-danger">Kembali</a>
+			</form>
+		</div>
+	</div>
+</div>
+{%endblock%}

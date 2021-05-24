@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+	{%include 'tambah_data.html'%}
 	<div class="container">
 		<div class="row">
 			<div class="col text-center" style="margin-top: 20px">
@@ -26,7 +27,7 @@
 				</thead>
 				{% for k in list_karyawan %}
 					<tr>
-						<th scope="col" class="align-middle">{{forloop.counter}}.</th>
+						<th scope="col" class="align-middle">{{k.id}}</th>
 						<td class="align-middle">{{k.nama}} </td>
 						<td class="align-middle">{{k.masa_kerja}} </td>
 						<td class="align-middle">{{k.usia}} </td>
@@ -34,7 +35,7 @@
 						<td class="align-middle">{{k.kemampuan_komunikasi}} </td>
 						<td class="align-middle">{{k.kesehatan}} </td>
 						<td class="align-middle">
-							<a href="#" class="btn btn-secondary">Edit</a>
+							<a href="{% url 'ubah' k.id %}" class="btn btn-secondary">Edit</a>
 							<button type="button" class="btn btn-danger" data-toggle="modal">
 							Hapus
 							</button>
