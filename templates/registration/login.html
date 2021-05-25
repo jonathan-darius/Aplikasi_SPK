@@ -1,0 +1,139 @@
+{%extends 'base.html'%}
+{%block content%}
+{% if user.is_authenticated %}
+	<meta http-equiv="refresh" content="0; url ={% url 'index' %}">
+	{%else%}
+	<style>
+		:root {
+	--input-padding-x: 1.5rem;
+	--input-padding-y: .75rem;
+	}
+	body {
+	background: #007bff;
+	background: linear-gradient(to right, #0062E6, #33AEFF);
+	}
+	.card-signin {
+	border: 0;
+	border-radius: 1rem;
+	}
+	.card-signin .card-title {
+	margin-bottom: 2rem;
+	font-weight: 300;
+	font-size: 1.5rem;
+	}
+	.card-signin .card-body {
+	padding: 2rem;
+	}
+	.form-signin {
+	width: 100%;
+	}
+	.form-signin .btn {
+	font-size: 80%;
+	border-radius: 5rem;
+	letter-spacing: .1rem;
+	padding: 1rem;
+	transition: all 0.2s;
+	}
+	.form-label-group {
+	position: relative;
+	margin-bottom: 1rem;
+	}
+	.form-label-group input {
+	height: auto;
+	border-radius: 2rem;
+	}
+	.form-label-group>input,
+	.form-label-group>label {
+	padding: var(--input-padding-y) var(--input-padding-x);
+	}
+	.form-label-group>label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	margin-bottom: 0;
+	line-height: 1.5;
+	color: #495057;
+	transition: all .1s ease-in-out;
+	}
+	.form-label-group input::-webkit-input-placeholder {
+	color: transparent;
+	}
+	.form-label-group input:-ms-input-placeholder {
+	color: transparent;
+	}
+	.form-label-group input::-ms-input-placeholder {
+	color: transparent;
+	}
+	.form-label-group input::-moz-placeholder {
+	color: transparent;
+	}
+	.form-label-group input::placeholder {
+	color: transparent;
+	}
+	.form-label-group input:not(:placeholder-shown) {
+	padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+	padding-bottom: calc(var(--input-padding-y) / 3);
+	}
+	.form-label-group input:not(:placeholder-shown)~label {
+	padding-top: calc(var(--input-padding-y) / 3);
+	padding-bottom: calc(var(--input-padding-y) / 3);
+	font-size: 12px;
+	color: #777;
+	}
+	.btn-google {
+	color: white;
+	background-color: #ea4335;
+	}
+	.btn-facebook {
+	color: white;
+	background-color: #3b5998;
+	}
+	@supports (-ms-ime-align: auto) {
+	.form-label-group>label {
+	display: none;
+	}
+	.form-label-group input::-ms-input-placeholder {
+	color: #777;
+	}
+	}
+	@media all and (-ms-high-contrast: none),
+	(-ms-high-contrast: active) {
+	.form-label-group>label {
+	display: none;
+	}
+	.form-label-group input:-ms-input-placeholder {
+	color: #777;
+	}
+	}
+	</style>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<div class="card card-signin my-5">
+					<div class="card-body">
+						<h1 class="text-center">SPK SMART</h1>
+						<h3 class="card-title text-center">Login</h3>
+						<form class="form-signin" method="post">
+							{% csrf_token %}
+							<div class="form-label-group">
+								
+								<input type="text" name="username"id="username" class="form-control" placeholder="Username" autofocus required="id_username">
+								<label for="username">Username</label>
+							</div>
+							<div class="form-label-group">
+								
+								<input type="password" id="password" class="form-control" placeholder="Password" name="password" autofocus required="id_password">
+								<label for="password">Password</label>
+							</div>
+							<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Login</button>
+							<hr class="my-4">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{%endif%}
+	{%endblock%}

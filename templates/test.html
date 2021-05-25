@@ -5,16 +5,16 @@
 	<div class="container">
 		<div class="row">
 			<div class="col text-center" style="margin-top: 20px">
-				<h2>List Seluruh Karyawan</h2>
+				<h2 class="text-white">List Seluruh Karyawan</h2>
 				
-				<button style="margin: 15px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#TambahData">Tambah Data Karyawan</button>
+				<button style="margin: 15px" type="button" class="btn btn-warning" data-toggle="modal" data-target="#TambahData">Tambah Data Karyawan</button>
 				<a style="margin: 15px" type="button" class="btn btn-success disabled" href="#">Download Daftar Karyawan</a>
 			</div>
 		</div>
-		<div style="width: 100%" class="table-responsive">
-			<table class="table table-hover text-center table-bordered" >
+		<div class="table-responsive">
+			<table class="table table-hover text-center table-bordered table-striped" >
 				<thead>
-					<tr>
+					<tr class="">
 						<th class="align-middle" scope="col">No.</th>
 						<th class="align-middle" scope="col">Nama</th>
 						<th class="align-middle" scope="col">Masa Kerja</th>
@@ -25,46 +25,47 @@
 						<th class="align-middle" scope="col"> Action</th>
 					</tr>
 				</thead>
-				{% for k in list_karyawan %}
-					<tr>
-						<th scope="col" class="align-middle">{{forloop.counter}}</th>
-						<td class="align-middle">{{k.nama}} </td>
-						<td class="align-middle">{{k.masa_kerja}} </td>
-						<td class="align-middle">{{k.usia}} </td>
-						<td class="align-middle">{{k.prestasi}} </td>
-						<td class="align-middle">{{k.kemampuan_komunikasi}} </td>
-						<td class="align-middle">{{k.kesehatan}} </td>
-						<td class="align-middle">
-							<a href="{% url 'ubah' k.id %}" class="btn btn-secondary">Edit</a>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Hapus-{{k.id}}">Hapus
-							</button>
-						</td>
-					</tr>
-					<!--MODAL-->
-					<div class="modal fade" id="Hapus-{{k.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<p>Apakah Anda Yakin Akan Menghapus Data Karyawan <strong>{{k.nama}}?</strong></p>
-								</div>
-								<div class="modal-footer">
-									<a href="{% url 'hapus' k.id %}" class="btn btn-danger">Yes</a>
-									<button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
+				<tbody>
+					{% for k in list_karyawan %}
+						<tr>
+							<th scope="col" class="align-middle">{{forloop.counter}}</th>
+							<td class="align-middle">{{k.nama}} </td>
+							<td class="align-middle">{{k.masa_kerja}} </td>
+							<td class="align-middle">{{k.usia}} </td>
+							<td class="align-middle">{{k.prestasi}} </td>
+							<td class="align-middle">{{k.kemampuan_komunikasi}} </td>
+							<td class="align-middle">{{k.kesehatan}} </td>
+							<td class="align-middle">
+								<a href="{% url 'ubah' k.id %}" class="btn btn-primary">Edit</a>
+								<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Hapus-{{k.id}}">Hapus
+								</button>
+							</td>
+						</tr>
+						<!--MODAL-->
+						<div class="modal fade" id="Hapus-{{k.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<p>Apakah Anda Yakin Akan Menghapus Data Karyawan <strong>{{k.nama}}?</strong></p>
+									</div>
+									<div class="modal-footer">
+										<a href="{% url 'hapus' k.id %}" class="btn btn-danger">Yes</a>
+										<button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!--END MODAL-->
-					
-				{% endfor %}
-				
-			</table>
-		</div>
-	</div>
-{% endblock %}
+						<!--END MODAL-->
+						
+					{% endfor %}
+					<tbody>
+					</table>
+				</div>
+			</div>
+		{% endblock %}
