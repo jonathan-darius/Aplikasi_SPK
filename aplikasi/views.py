@@ -71,10 +71,10 @@ def coba(request):
         total_k_komunikasi += karyawan[x].kemampuan_komunikasi.bobot
         total_kesehatan += karyawan[x].kesehatan.bobot
     konteks={
-        'total_usia': total_usia,
-        'total_masakerja': total_masakerja,
-        'total_prestasi': int(total_prestasi),
-        'total_k_komunikasi': int(total_k_komunikasi),
-        'total_kesehatan': int(total_kesehatan),
+        'total_usia' : total_usia,
+        'total_masakerja' : total_masakerja,
+        'total_prestasi' : int(total_prestasi),
+        'total_k_komunikasi' : int(total_k_komunikasi),
+        'total_kesehatan' : int(total_kesehatan),
     }
-    return render(request,'coba.html',konteks)
+    return render(request, 'coba.html', konteks)
