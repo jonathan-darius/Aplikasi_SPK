@@ -1,18 +1,40 @@
 {%extends 'base.html'%}
 {%block content%}
-<h2>
-Total Usia : {{total_usia}}
-</h2>
-<h2>
-Total Masa Kerja : {{total_masakerja}}
-</h2>
-<h2>
-Total Nilai Prestasi : {{total_prestasi}}
-</h2>
-<h2>
-Total Nilai Kemampuan Komunikasi : {{total_k_komunikasi}}
-</h2>
-<h2>
-Total Kesehatan : {{total_kesehatan}}
-</h2>
-{%endblock%}
+<div class="container">
+	<div class="row">
+		<div class="col text-center" style="margin: 20px">
+			<h2 class="text-white">Hasil Analisa</h2>
+			<h2 class="text-white">Metode SMART</h2>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover text-center table-bordered table-striped" >
+			<thead>
+				<tr class="">
+					<th class="align-middle" scope="col">No.</th>
+					<th class="align-middle" scope="col">Nama</th>
+					<th class="align-middle" scope="col">Utilitas</th>
+					<th class="align-middle" scope="col">Bobot</th>
+					<th class="align-middle" scope="col">Normalisasi</th>
+					<th class="align-middle" scope="col">Hasil</th>
+					<th class="align-middle" scope="col">Hasil Akhir</th>
+					<th class="align-middle" scope="col">Rekomendasi</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for h in list_hasil %}
+					<tr>
+						<th scope="col" class="align-middle">{{forloop.counter}}</th>
+						{% for p in h %}
+							<td class="align-middle">
+								{% for z in p %}
+									<p>{{z}}</p>
+									{%endfor%}
+								</td>
+								{%endfor%}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{%endblock%}

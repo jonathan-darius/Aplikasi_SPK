@@ -11,5 +11,5 @@ urlpatterns = [
     path('index/hapus_data/<int:id_karyawan>', hapus_data, name='hapus'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
-    path('coba/', coba)
+    path('Hasil/', coba)
 ]

@@ -17,3 +17,15 @@ def nilai_usia(nilai):
     else:
       hasil = 50
     return hasil
+
+def generator(hasil):
+    hasil = round(hasil)
+    if hasil >80:
+        rekomendasi = "Sangat Layak"
+    elif hasil in range(70,80):
+        rekomendasi = "Layak"
+    elif hasil in range(60,70):
+        rekomendasi = "Dipertimbangkan"
+    else:
+        rekomendasi = "Tidak Layak"
+    return rekomendasi

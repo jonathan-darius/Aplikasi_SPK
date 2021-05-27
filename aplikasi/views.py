@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from aplikasi.fungsi_tambahan import *
-
+from operator import itemgetter
 
 @login_required(login_url=settings.LOGIN_URL)
 def index(request):
@@ -59,22 +59,47 @@ def hapus_data(request,id_karyawan):
 
 def coba(request):
     karyawan = Karyawan.objects.all()
-    total_usia = 0
-    total_masakerja = 0
-    total_prestasi = 0
-    total_k_komunikasi = 0
-    total_kesehatan = 0
+    list_usia,list_masa_kerja, list_prestasi,list_k_komunikasi, list_kesehatan = [n.usia for n in karyawan],\
+                                                                                 [n.masa_kerja for n in karyawan], \
+                                                                                 [n.prestasi.bobot for n in karyawan], \
+                                                                                 [n.kemampuan_komunikasi.bobot for n in karyawan],\
+                                                                                 [n.kesehatan.bobot for n in karyawan]
+    """
+    total_usia = sum([nilai_usia(x) for x in list_usia])
+    total_masakerja = sum([nilai_masa_kerja(x) for x in list_masa_kerja])
+    total_prestasi = sum(list_prestasi)
+    total_k_komunikasi = sum(list_k_komunikasi)
+    total_kesehatan = sum(list_kesehatan)"""
+
+    akhir=[]
+    utilitas = []
+    n = []
+    normasilasi = [0.4,0.3,0.15,0.1,0.05]
     for x in range(len(karyawan)):
-        total_usia += nilai_usia(karyawan[x].usia)
-        total_masakerja += nilai_masa_kerja(karyawan[x].masa_kerja)
-        total_prestasi += karyawan[x].prestasi.bobot
-        total_k_komunikasi += karyawan[x].kemampuan_komunikasi.bobot
-        total_kesehatan += karyawan[x].kesehatan.bobot
+        prestasi = list_prestasi[x]*normasilasi[0]
+        masa_kerja = nilai_masa_kerja(list_masa_kerja[x]) * normasilasi[1]
+        usia = nilai_usia(list_usia[x])*normasilasi[2]
+        kemampuan_komunikasi = list_k_komunikasi[x]*normasilasi[3]
+        kesehatan = list_kesehatan[x]*normasilasi[4]
+        n.append([list_prestasi[x],nilai_masa_kerja(list_masa_kerja[x]),nilai_usia(list_usia[x]),list_k_komunikasi[x],list_kesehatan[x]])
+        akhir.append([prestasi,masa_kerja,usia,kemampuan_komunikasi,kesehatan])
+        utilitas.append([karyawan[x].prestasi,list_masa_kerja[x],list_usia[x],karyawan[x].kemampuan_komunikasi,karyawan[x].kesehatan])
+    kk =[]
+    for p in akhir:
+        kk.append([sum(p)])
+
+    final = []
+    for m in range(len(karyawan)):
+        nama_karyawan = karyawan[m].nama
+        hasil = akhir[m]
+        hasil_akhir = kk[m][0]
+        util = utilitas[m]
+        nilai = n[m]
+        rekomendasi = generator(hasil_akhir)
+        final.append([[nama_karyawan],util,nilai,normasilasi,hasil,[hasil_akhir],[rekomendasi]])
+    final = sorted(final, key=lambda x: x[5][0], reverse=True)
     konteks={
-        'total_usia' : total_usia,
-        'total_masakerja' : total_masakerja,
-        'total_prestasi' : int(total_prestasi),
-        'total_k_komunikasi' : int(total_k_komunikasi),
-        'total_kesehatan' : int(total_kesehatan),
+        'list_hasil':final,
+        'normalisasi': normasilasi,
     }
     return render(request, 'coba.html', konteks)
