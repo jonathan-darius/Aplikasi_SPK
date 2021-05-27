@@ -8,7 +8,7 @@
 				<h2 class="text-white">List Seluruh Karyawan</h2>
 				
 				<button style="margin: 15px" type="button" class="btn btn-warning" data-toggle="modal" data-target="#TambahData">Tambah Data Karyawan</button>
-				<a style="margin: 15px" type="button" class="btn btn-success disabled" href="#">Download Daftar Karyawan</a>
+				<a style="margin: 15px" type="button" class="btn btn-success" href="{% url 'export_xls' %}">Download Daftar Karyawan</a>
 			</div>
 		</div>
 		<div class="table-responsive">

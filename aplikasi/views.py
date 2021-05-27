@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from aplikasi.fungsi_tambahan import *
-from operator import itemgetter
+from aplikasi.resource import *
 
 @login_required(login_url=settings.LOGIN_URL)
 def index(request):
@@ -56,7 +56,7 @@ def hapus_data(request,id_karyawan):
 
     return (redirect('index'))
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def coba(request):
     karyawan = Karyawan.objects.all()
     list_usia,list_masa_kerja, list_prestasi,list_k_komunikasi, list_kesehatan = [n.usia for n in karyawan],\
@@ -74,6 +74,7 @@ def coba(request):
     akhir=[]
     utilitas = []
     n = []
+    kriteria = ["Prestasi","Masa Kerja","Usia","Kemampuan Komunikasi", "Kesehatan"]
     normasilasi = [0.4,0.3,0.15,0.1,0.05]
     for x in range(len(karyawan)):
         prestasi = list_prestasi[x]*normasilasi[0]
@@ -96,10 +97,17 @@ def coba(request):
         util = utilitas[m]
         nilai = n[m]
         rekomendasi = generator(hasil_akhir)
-        final.append([[nama_karyawan],util,nilai,normasilasi,hasil,[hasil_akhir],[rekomendasi]])
-    final = sorted(final, key=lambda x: x[5][0], reverse=True)
+        final.append([[nama_karyawan],kriteria,util,nilai,normasilasi,hasil,[hasil_akhir],[rekomendasi]])
+    final = sorted(final, key=lambda x: x[6][0], reverse=True)
     konteks={
         'list_hasil':final,
         'normalisasi': normasilasi,
     }
     return render(request, 'coba.html', konteks)
+
+def export_xls(request):
+    karyawan = KaryawanResources()
+    dataset = karyawan.export()
+    response = HttpResponse(dataset.xls,content_type='applications/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=karyawan.xls'
+    return response
