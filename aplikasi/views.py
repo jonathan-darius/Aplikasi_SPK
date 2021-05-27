@@ -105,6 +105,7 @@ def coba(request):
     }
     return render(request, 'coba.html', konteks)
 
+@login_required(login_url=settings.LOGIN_URL)
 def export_xls(request):
     karyawan = KaryawanResources()
     dataset = karyawan.export()
