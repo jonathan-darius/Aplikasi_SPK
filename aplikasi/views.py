@@ -70,24 +70,28 @@ def coba(request):
     total_prestasi = sum(list_prestasi)
     total_k_komunikasi = sum(list_k_komunikasi)
     total_kesehatan = sum(list_kesehatan)"""
-
+    list_nilai_usia = [nilai_usia(x) for x in list_usia]
+    list_nilai_masa_kerja = [nilai_masa_kerja(x) for x in list_masa_kerja]
+    max_usia = min(list_prestasi)
     akhir=[]
     utilitas = []
     n = []
+    z= []
     kriteria = ["Prestasi","Masa Kerja","Usia","Kemampuan Komunikasi", "Kesehatan"]
     normasilasi = [0.4,0.3,0.15,0.1,0.05]
     for x in range(len(karyawan)):
-        prestasi = list_prestasi[x]*normasilasi[0]
-        masa_kerja = nilai_masa_kerja(list_masa_kerja[x]) * normasilasi[1]
-        usia = nilai_usia(list_usia[x])*normasilasi[2]
-        kemampuan_komunikasi = list_k_komunikasi[x]*normasilasi[3]
-        kesehatan = list_kesehatan[x]*normasilasi[4]
-        n.append([list_prestasi[x],nilai_masa_kerja(list_masa_kerja[x]),nilai_usia(list_usia[x]),list_k_komunikasi[x],list_kesehatan[x]])
+        prestasi = round(utility(list_prestasi,x)*normasilasi[0],2)
+        masa_kerja = utility(list_nilai_masa_kerja,x) * normasilasi[1]
+        usia = utility(list_nilai_usia,x)*normasilasi[2]
+        kemampuan_komunikasi = round(utility(list_k_komunikasi,x)*normasilasi[3],2)
+        kesehatan = round(utility(list_kesehatan,x)*normasilasi[4],2)
+        z.append([round(utility(list_prestasi,x),2),round(utility(list_nilai_masa_kerja,x),2),round(utility(list_nilai_usia,x),2),round(utility(list_k_komunikasi,x),2),round(utility(list_kesehatan,x),2)])
+        n.append([int(list_prestasi[x]),nilai_masa_kerja(list_masa_kerja[x]),nilai_usia(list_usia[x]),int(list_k_komunikasi[x]),int(list_kesehatan[x])])
         akhir.append([prestasi,masa_kerja,usia,kemampuan_komunikasi,kesehatan])
         utilitas.append([karyawan[x].prestasi,list_masa_kerja[x],list_usia[x],karyawan[x].kemampuan_komunikasi,karyawan[x].kesehatan])
     kk =[]
     for p in akhir:
-        kk.append([sum(p)])
+        kk.append([round(sum(p),2)])
 
     final = []
     for m in range(len(karyawan)):
@@ -96,9 +100,10 @@ def coba(request):
         hasil_akhir = kk[m][0]
         util = utilitas[m]
         nilai = n[m]
+        zz = z[m]
         rekomendasi = generator(hasil_akhir)
-        final.append([[nama_karyawan],kriteria,util,nilai,normasilasi,hasil,[hasil_akhir],[rekomendasi]])
-    final = sorted(final, key=lambda x: x[6][0], reverse=True)
+        final.append([[nama_karyawan],kriteria,util,nilai,zz,normasilasi,hasil,[hasil_akhir],[rekomendasi]])
+    final = sorted(final, key=lambda x: x[7][0], reverse=True)
     konteks={
         'list_hasil':final,
         'normalisasi': normasilasi,
